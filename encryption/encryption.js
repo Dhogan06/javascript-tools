@@ -82,7 +82,7 @@ class DauigiEncryption {
         shift.min = "0";
         shift.max = "26";
         algorithm.min = "1";
-        algorithm.max = this.#algorithms.length;
+        algorithm.max = this.algorithms.length;
 
         // Functions for updating pattern and fields
         let updatePattern = () => {
