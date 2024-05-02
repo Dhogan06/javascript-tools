@@ -3,8 +3,8 @@ import DauigiEncryption from "./encryption/encryption.js";
 class DauigiWebTools {
     
     constructor() {
-        this.cookies = new this.#Cookies();
         this.encryption = new DauigiEncryption();
+        this.cookies = new this.#Cookies(this.encryption);
     }
 
     #Cookies = class {
@@ -21,7 +21,7 @@ class DauigiWebTools {
             let shift = Math.floor(Math.random() * (26 - 0 + 1)) + 0;
             let algorithm = 2;
             let pattern = key + '-' + shift + '-' + algorithm;
-            this.#encryptionPattern = new this.#EncryptionPattern(pattern, atob(this.#passphrase), encryption);
+            this.#encryptionPattern = new this.#EncryptionPattern(pattern, atob(this.#passphrase), this.#encryption);
         }
 
         /** 
