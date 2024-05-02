@@ -260,10 +260,14 @@ class DauigiEncryption {
     }
 
     base64Encode(text) {
-        return btoa(text);
+        return btoa(text).replace(/=/g, '');
     }
-
+    
     base64Decode(text) {
+        // Ensure that the length of the input string is a multiple of 4
+        while (text.length % 4 !== 0) {
+            text += '=';
+        }
         return atob(text);
     }
 
