@@ -27,8 +27,8 @@ class DauigiWebTools {
             this.#pattern = key + '-' + shift + '-' + algorithm;
             this.#encryptionPattern = new this.#EncryptionPattern(this.#pattern, atob(this.#passphrase), encryption);
         
-            window.onbeforeunload = () => {
-                this.clearCookies(this.#cookies);
+            window.onload = () => {
+                this.clearAllCookies();
             }
         }
 
@@ -90,13 +90,23 @@ class DauigiWebTools {
             return null;
         }
 
-        /** Function to clear all cookies *
+        /** 
          * @param {string[]} cookieNames All of the cookies you want to clear.
          */
         clearCookies(cookieNames) {
             cookieNames.map(str => this.#encryptionPattern.encrypt(str));
             for (var i = 0; i < cookieNames.length; i++) {
                 document.cookie = cookieNames[i] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Clear each specified cookie by setting its expiry date to the past
+            }
+        }
+
+        clearAllCookies() {
+            var cookies = document.cookie.split(";"); // Get all cookies
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Clear the cookie by setting its expiry date to the past
             }
         }
 
