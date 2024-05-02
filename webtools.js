@@ -20,7 +20,7 @@ class DauigiWebTools {
          * @param {DauigiEncryption} encryption The ecryption class used for encrypting cookies.
          */
         constructor(encryption) {
-            this.#passphrase == btoa(this.#generatePassphrase(15));
+            this.#passphrase = btoa(this.#generatePassphrase(15));
             let key = encryption.generateKey(atob(this.#passphrase));
             let shift = Math.floor(Math.random() * (26 - 0 + 1)) + 0;
             let algorithm = 1;
