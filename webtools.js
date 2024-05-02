@@ -1,7 +1,7 @@
 import DauigiEncryption from "./encryption/encryption.js";
 
 class DauigiWebTools {
-    
+
     constructor() {
         this.encryption = new DauigiEncryption();
         this.cookies = new this.#Cookies(this.encryption);
@@ -10,18 +10,40 @@ class DauigiWebTools {
     #Cookies = class {
 
         #encryptionPattern;
-        #passphrase = "Q29va2llRW5jcnlwdGlvbg==";
+        #passphrase;
+        #pattern;
+
+        #cookies = [];
 
         /**
          * Use this to handle cookies.
          * @param {DauigiEncryption} encryption The ecryption class used for encrypting cookies.
          */
         constructor(encryption) {
+            this.#passphrase == btoa(this.#generatePassphrase(15));
             let key = encryption.generateKey(atob(this.#passphrase));
             let shift = Math.floor(Math.random() * (26 - 0 + 1)) + 0;
-            let algorithm = 2;
-            let pattern = key + '-' + shift + '-' + algorithm;
-            this.#encryptionPattern = new this.#EncryptionPattern(pattern, atob(this.#passphrase), encryption);
+            let algorithm = 1;
+            this.#pattern = key + '-' + shift + '-' + algorithm;
+            this.#encryptionPattern = new this.#EncryptionPattern(this.#pattern, atob(this.#passphrase), encryption);
+        
+            window.onload = () => {
+                this.clearCookies(this.#cookies);
+            }
+        }
+
+        /**
+         * 
+         * @param {number} length 
+         * @returns {string}
+         */
+        #generatePassphrase(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
         }
 
         /** 
@@ -31,6 +53,7 @@ class DauigiWebTools {
          * @param {number} [daysToExpire] - Optional. The number of days until the cookie expires
          */
         setCookie(name, value, daysToExpire) {
+            this.#cookies.push(name);
             name = this.#encryptionPattern.encrypt(name);
             value = this.#encryptionPattern.encrypt(value);
             var expires = "";
@@ -65,6 +88,16 @@ class DauigiWebTools {
             }
             // Return null if the cookie with the specified name is not found
             return null;
+        }
+
+        /** Function to clear all cookies *
+         * @param {string[]} cookieNames All of the cookies you want to clear.
+         */
+        clearCookies(cookieNames) {
+            cookieNames.map(str => this.#encryptionPattern.encrypt(str));
+            for (var i = 0; i < cookieNames.length; i++) {
+                document.cookie = cookieNames[i] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Clear each specified cookie by setting its expiry date to the past
+            }
         }
 
         #EncryptionPattern = class {
