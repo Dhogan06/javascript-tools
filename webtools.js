@@ -27,7 +27,7 @@ class DauigiWebTools {
             this.#pattern = key + '-' + shift + '-' + algorithm;
             this.#encryptionPattern = new this.#EncryptionPattern(this.#pattern, atob(this.#passphrase), encryption);
         
-            window.onload = () => {
+            window.onbeforeunload = () => {
                 this.clearCookies(this.#cookies);
             }
         }
