@@ -11,15 +11,13 @@ class DauigiWebTools {
 
         #encryptionPattern;
         #passphrase = "Q29va2llRW5jcnlwdGlvbg==";
-        #encryption;
 
         /**
          * Use this to handle cookies.
          * @param {DauigiEncryption} encryption The ecryption class used for encrypting cookies.
          */
         constructor(encryption) {
-            this.#encryption = encryption;
-            let key = this.#encryption.generateKey(atob(this.#passphrase));
+            let key = encryption.generateKey(atob(this.#passphrase));
             let shift = Math.floor(Math.random() * (26 - 0 + 1)) + 0;
             let algorithm = 2;
             let pattern = key + '-' + shift + '-' + algorithm;
