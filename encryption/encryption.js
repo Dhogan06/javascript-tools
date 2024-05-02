@@ -49,7 +49,7 @@ class DauigiEncryption {
         );
     }
 
-    #algorithms = []
+    algorithms = []
 
     createForm() {
         // Create elements
@@ -105,13 +105,13 @@ class DauigiEncryption {
         // Functions for encryption, decryption, and key generation
         let encrypt = () => {
             if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
-                text.value = this.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
+                text.value = this.algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
             }
         }
 
         let decrypt = () => {
             if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
-                text.value = this.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
+                text.value = this.algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
             }
         }
 
@@ -175,7 +175,7 @@ class DauigiEncryption {
         let algorithm = new this.#Algorithm();
         algorithm.encrypt = encrypt;
         algorithm.decrypt = decrypt;
-        this.#algorithms.push(algorithm);
+        this.algorithms.push(algorithm);
     }
 
     scramble(text, key, passphrase) {
