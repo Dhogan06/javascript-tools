@@ -49,7 +49,7 @@ class DauigiEncryption {
         );
     }
 
-    algorithms = []
+    algorithms = [];
 
     createForm() {
         // Create elements
